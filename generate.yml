@@ -1,0 +1,12 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: Generate standard operating procedures
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Generate disaster-recovery SOP
+      ansible.builtin.template:
+        src: disaster-recovery.md.j2
+        dest: output/disaster-recovery.md

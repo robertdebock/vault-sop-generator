@@ -1,0 +1,59 @@
+# Disaster Recovery
+
+Here is how to setup Disaster Recovery between your Vault Enterprise clusters.
+
+## Requirements
+
+- Vault should be initialised and unsealed.
+
+## Method
+
+Login to a node of the primary cluster.
+
+```shell
+ssh {{ disaster_recovery_primary_nodes[0].name }}
+```
+
+Authenicate to Vault:
+
+```shell
+vault login
+```
+
+Enable DR replication:
+
+```shell
+vault write -f sys/replication/dr/primary/enable primary_cluster_addr={{ disaster_recovery_primary_replication_url }}
+```
+
+Generate a DR token.
+
+```shell
+vault write sys/replication/dr/primary/secondary-token id="{{ disaster_recovery_secondary_token_id }}"
+```
+
+This last command will output the token that has to be provided on the secondary in the next step.
+
+Login to a node of the secondary cluster.
+
+```shell
+ssh {{ disaster_recovery_secondary_nodes[0].name }}
+```
+
+Authenicate to Vault:
+
+```shell
+vault login
+```
+
+Enable DR replication:
+
+```shell
+vault write sys/replication/dr/secondary/enable token=TOKEN_FROM_PRIMARY primary_api_addr={{ disaster_recovery_primary_api_addr }}
+```
+
+Generate a DR operation token.
+
+```shell
+TODO: fill in.
+```
