@@ -1,6 +1,8 @@
 # SOP Generator
 
-1. Fill in a customer value file. See `example-customer-values.yml` for an example.
-2. Run `./generate.yml --extra-vars="@example-customer-values.yml"`
+Generate standard operating procedures (SOPs) for a specific Vault environment.
 
-The output will be in `output/`.
+1. Fill in a customer value file. See `examples/*.yml` for examples.
+2. Run `./generate.yml --extra-vars="@your-customer-values.yml"`
+
+The output will be stored in `output/`.
