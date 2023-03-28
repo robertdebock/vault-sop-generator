@@ -1,0 +1,17 @@
+---
+
+# These are value for an "example" customer.
+
+disaster_recovery:
+  primary_replication_url: "https://vault.example.com:8201"
+  primary_api_url: "https://vault.example.com:443"
+  secondary_token: my-fake-token
+  secondary_token_id: vault-eu
+  primary_nodes:
+    - name: vault-1.example.com
+    - name: vault-2.example.com
+    - name: vault-3.example.com
+  secondary_nodes:
+    - name: vault-4.example.com
+    - name: vault-5.example.com
+    - name: vault-6.example.com

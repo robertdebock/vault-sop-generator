@@ -10,3 +10,5 @@
       ansible.builtin.template:
         src: disaster-recovery.md.j2
         dest: output/disaster-recovery.md
+      when:
+        - disaster_recovery is defined
