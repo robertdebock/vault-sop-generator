@@ -11,13 +11,14 @@ Here is how to setup Disaster Recovery between your Vault Enterprise clusters.
 Login to a node of the primary cluster.
 
 ```shell
-ssh {{ disaster_recovery.primary_nodes[0].name }}
+ssh {{ nodes[0].name }}
 ```
 
 > Note: you can use any of the nodes from the primary cluster:
-> - `disaster_recovery_primary_nodes[0].name`
-> - `disaster_recovery_primary_nodes[1].name`
-> - `disaster_recovery_primary_nodes[2].name`
+>
+> - `{{ nodes[0].name }}`
+> - `{{ nodes[1].name }}`
+> - `{{ nodes[2].name }}`
 
 Authenicate to Vault:
 
@@ -37,7 +38,7 @@ Generate a DR token.
 vault write sys/replication/dr/primary/secondary-token id="{{ disaster_recovery.secondary_token_id }}"
 ```
 
-This last command will output the token that has to be provided on the secondary in the next step.
+This last command will output the token that has to be provided on a node from the secondary cluster in the steps below.
 
 Login to a node of the secondary cluster.
 
@@ -45,10 +46,11 @@ Login to a node of the secondary cluster.
 ssh {{ disaster_recovery.secondary_nodes[0].name }}
 ```
 
-> Note: you can use any of the nodes from the primary cluster:
-> - `disaster_recovery.secondary_nodes[0].name`
-> - `disaster_recovery.secondary_nodes[1].name`
-> - `disaster_recovery.secondary_nodes[2].name`
+> Note: you can use any of the nodes from the secondary cluster:
+>
+> - `{{ disaster_recovery.secondary_nodes[0].name }}`
+> - `{{ disaster_recovery.secondary_nodes[1].name }}`
+> - `{{ disaster_recovery.secondary_nodes[2].name }}`
 
 Authenicate to Vault:
 

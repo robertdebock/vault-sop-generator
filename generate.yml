@@ -6,6 +6,11 @@
   gather_facts: no
 
   tasks:
+    - name: Generate restart SOP
+      ansible.builtin.template:
+        src: restart.md.j2
+        dest: output/restart.md
+
     - name: Generate disaster-recovery SOP
       ansible.builtin.template:
         src: disaster-recovery.md.j2

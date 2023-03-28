@@ -1,0 +1,48 @@
+# Restarting Vault
+
+Follow therse steps in case you would need to restart Vault.
+
+## Requirements
+
+- Vault is initialized and unsealed.
+{% if unseal_method == "shamir" %}
+- Unseal keys.
+{% endif %}
+
+## Method
+
+Login to any Vault node of the Vault cluster you would like to restart.
+
+```shell
+ssh {{ nodes[0].name }}
+```
+
+> Note: you can use any of the nodes from the primary cluster:
+>
+> - `{{ nodes[0].name }}`
+> - `{{ nodes[1].name }}`
+> - `{{ nodes[2].name }}`
+{% if disaster_recovery is defined %}
+>
+> or any of the nodes from the secondary cluster:
+>
+> - `{{ disaster_recovery.secondary_nodes[0].name }}`
+> - `{{ disaster_recovery.secondary_nodes[1].name }}`
+> - `{{ disaster_recovery.secondary_nodes[2].name }}`
+{% endif %}
+
+Restart Vault service:
+
+```shell
+sudo systemctl restart vault
+```
+
+{% if unseal_method == "shamir" %}
+Unseal Vault:
+
+```shell
+vault operator unseal UNSEAL_KEY_1
+vault operator unseal UNSEAL_KEY_2
+vault operator unseal UNSEAL_KEY_3
+```
+{% endif %}

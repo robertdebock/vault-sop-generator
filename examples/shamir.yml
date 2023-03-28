@@ -1,0 +1,10 @@
+---
+
+# These are value for an "example" customer.
+
+nodes:
+  - name: vault-1.example.com
+  - name: vault-2.example.com
+  - name: vault-3.example.com
+
+unseal_method: shamir
