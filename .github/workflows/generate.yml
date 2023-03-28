@@ -22,4 +22,4 @@ jobs:
         run: pip3 install ansible
 
       - name: Run generate command
-        run: ./generate.yml --extra-vars="@examples/{{ matrix.config.name }}"
+        run: ./generate.yml --extra-vars="@examples/${{ matrix.config.name }}"
