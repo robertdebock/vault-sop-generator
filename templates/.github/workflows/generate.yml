@@ -1,0 +1,20 @@
+---
+
+jobs:
+  generate:
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: dr.yml
+          - name: shamir.yml
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install ansible
+        run: pip3 install ansible
+
+      - name: Run generate command
+        run: ./generate.yml --extra-vars="@examples/{{ matrix.config.name }}"
