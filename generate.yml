@@ -10,10 +10,18 @@
       ansible.builtin.template:
         src: restart.md.j2
         dest: output/restart.md
+        mode: "0644"
+
+    - name: Generate update SOP
+      ansible.builtin.template:
+        src: update.md.j2
+        dest: output/update.md
+        mode: "0644"
 
     - name: Generate disaster-recovery SOP
       ansible.builtin.template:
         src: disaster-recovery.md.j2
         dest: output/disaster-recovery.md
+        mode: "0644"
       when:
         - disaster_recovery is defined

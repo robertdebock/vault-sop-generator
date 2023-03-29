@@ -1,0 +1,60 @@
+# Updating Vault
+
+Follow therse steps in case you would need to update Vault.
+
+## Requirements
+
+- Vault is initialized and unsealed.
+{% if unseal_method == "shamir" %}
+- Unseal keys.
+{% endif %}
+
+## Method
+
+{% if disaster_recovery is defined %}
+Login to any Vault node of the secondary Vault cluster you would like to update.
+
+```shell
+ssh {{ disaster_recovery.secondary_nodes[0].name }}
+```
+
+> Note: you can use any of the nodes from the secondary cluster:
+>
+> - `{{ disaster_recovery.secondary_nodes[0].name }}`
+> - `{{ disaster_recovery.secondary_nodes[1].name }}`
+> - `{{ disaster_recovery.secondary_nodes[2].name }}`
+{% enif %}
+
+Login to any Vault node of the Vault cluster you would like to update.
+
+```shell
+ssh {{ nodes[0].name }}
+```
+
+> Note: you can use any of the nodes from the primary cluster:
+>
+> - `{{ nodes[0].name }}`
+> - `{{ nodes[1].name }}`
+> - `{{ nodes[2].name }}`
+
+Stop the Vault service:
+
+```shell
+sudo systemctl stop vault
+```
+
+Update the Vault binary:
+
+```shell
+sudo yum update -y vault
+```
+
+{% if unseal_method == "shamir" %}
+Unseal Vault:
+
+```shell
+vault operator unseal UNSEAL_KEY_1
+vault operator unseal UNSEAL_KEY_2
+vault operator unseal UNSEAL_KEY_3
+```
+{% endif %}
