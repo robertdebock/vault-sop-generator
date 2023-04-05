@@ -64,8 +64,55 @@ Enable DR replication:
 vault write sys/replication/dr/secondary/enable token=TOKEN_FROM_PRIMARY primary_api_addr={{ disaster_recovery.primary_api_url }}
 ```
 
-Generate a DR operation token.
+Generate a DR operation token:
+
+On a node from the primary cluster, like ({{ nodes[0].name }}), run
 
 ```shell
-TODO: fill in.
+vault policy write dr-secondary-promotion - <<EOF
+path "sys/replication/dr/secondary/promote" {
+  capabilities = [ "update" ]
+}
+
+# To update the primary to connect
+path "sys/replication/dr/secondary/update-primary" {
+    capabilities = [ "update" ]
+}
+
+# Only if using integrated storage (raft) as the storage backend
+# To read the current autopilot status
+path "sys/storage/raft/autopilot/state" {
+    capabilities = [ "update" , "read" ]
+}
+EOF
+```
+
+> Note: you can use any of the nodes from the primary cluster:
+>
+> - `{{ nodes[0].name }}`
+> - `{{ nodes[1].name }}`
+> - `{{ nodes[2].name }}`
+
+Verify if the policy is available:
+
+```shell
+vault policy list
+```
+
+You should see the `dr-secondary-promotion` policy.
+
+Create a token role named "failover-handler" with the dr-secondary-promotion policy attached and its type should be batch.
+
+```shell
+vault write auth/token/roles/failover-handler \
+    allowed_policies=dr-secondary-promotion \
+    orphan=true \
+    renewable=false \
+    token_type=batch
+```
+
+Finally, create the DR operation token:
+
+```shell
+vault token create -role=failover-handler -ttl={{ disaster_recovery.dr_operation_token_ttl }}
 ```

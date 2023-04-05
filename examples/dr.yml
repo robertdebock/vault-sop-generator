@@ -18,3 +18,4 @@ disaster_recovery:
     - name: vault-4.example.com
     - name: vault-5.example.com
     - name: vault-6.example.com
+  dr_operation_token_ttl: 8h
