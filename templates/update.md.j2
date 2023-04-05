@@ -23,7 +23,7 @@ ssh {{ disaster_recovery.secondary_nodes[0].name }}
 > - `{{ disaster_recovery.secondary_nodes[0].name }}`
 > - `{{ disaster_recovery.secondary_nodes[1].name }}`
 > - `{{ disaster_recovery.secondary_nodes[2].name }}`
-{% enif %}
+{% endif %}
 
 Login to any Vault node of the Vault cluster you would like to update.
 
