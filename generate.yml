@@ -6,6 +6,9 @@
   gather_facts: no
 
   tasks:
+    - name: Assert variables
+      ansible.builtin.include_tasks: assert.yml
+        
     - name: Generate restart SOP
       ansible.builtin.template:
         src: restart.md.j2

@@ -1,0 +1,26 @@
+---
+
+- name: Check if "nodes" is set
+  assert:
+    that:
+      - nodes is defined
+      - nodes is iterable
+    quiet: yes
+
+- name: Check that items in "nodes" are set
+  assert:
+    that:
+      - item.name is defined
+      - item.name is string
+      - item.name | length > 0
+    quiet: yes
+  loop: "{{ nodes }}"
+
+- name: Check if "unseal_method" is set
+  assert:
+    that:
+      - unseal_method is defined
+      - unseal_method is string
+      - unseal_method | length > 0
+      - unseal_method in [ "shamir" ]
+    quiet: yes
